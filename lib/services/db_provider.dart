@@ -22,7 +22,7 @@ class DatabaseClient{
   Future<Database> createDatabase() async{
 
     Directory directory=await getApplicationDocumentsDirectory();
-    final path=join(directory.path,"anuaire.db");
+    final path=join(directory.path,"annuaire_contact.db");
 
     return await openDatabase(path,version: 1,
         onCreate: onCreate
@@ -30,22 +30,21 @@ class DatabaseClient{
 
   }
   onCreate(Database database,int version) async{
-    await database.execute('''
+
+
+    await database.execute("""
       CREATE TABLE Contact (
-      ${columnId} INTEGER PRIMARY KEY,
-      ${columnfirstname}  TEXT NOT NULL,
-      ${columnfirstname}  TEXT NOT NULL,
-      ${columnPhone}  TEXT NOT NULL,
-    
-      )
-    
-    ''');
-
-
+      $columnId INTEGER NOT NULL PRIMARY KEY,
+      $columnfirstname TEXT NOT NULL,
+      $columnlastname  TEXT NOT NULL,
+      $columnPhone TEXT NOT NULL); 
+      """);
   }
+
 
   //Future close() async =>
   Future<bool> addContact (Contact contact) async{
+
     Database db=await database;
 
     await db.insert("Contact",contact.toMap());
@@ -62,7 +61,7 @@ class DatabaseClient{
     // mapList.map((e) => ItemList.fromJson(e)).toList();
   }
 
-  Future<Contact?> getContact(int id) async{
+  Future<Contact?> getContact(int? id) async{
     Database db=await database;
     List<Map<String,dynamic>> maps=await db.query('Contact',
         columns: [columnId,columnfirstname,columnlastname,columnPhone],

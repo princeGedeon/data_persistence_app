@@ -1,4 +1,4 @@
-final String tableTodo = 'contacts';
+final String tableContact = 'contacts';
 final String columnId = '_id';
 final String columnfirstname = 'firstname';
 final String columnlastname = 'lastname';
@@ -10,6 +10,8 @@ class Contact {
   String? lastname;
   String? phone;
 
+
+  Contact(this.firstname, this.lastname, this.phone);
 
   Map<String, Object?> toMap() {
     var map = <String, Object?>{
@@ -23,7 +25,7 @@ class Contact {
     return map;
   }
 
-  Contact();
+
 
   Contact.fromMap(Map<String, dynamic> map) {
     id = map[columnId];

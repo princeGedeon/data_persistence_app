@@ -5,15 +5,19 @@ import 'package:shared_pref_projet/services/db_provider.dart';
 
 import 'list_contact_page.dart';
 
-class AddContactPage extends StatefulWidget {
-  const AddContactPage({Key? key}) : super(key: key);
+class UpdateContactPage extends StatefulWidget {
+   UpdateContactPage({Key? key,required this.id}) : super(key: key);
+    int? id;
 
   @override
-  State<AddContactPage> createState() => _AddContactPageState();
+  State<UpdateContactPage> createState() => _UpdateContactPageState();
+
+
 }
 
-class _AddContactPageState extends State<AddContactPage> {
+class _UpdateContactPageState extends State<UpdateContactPage> {
 
+  Contact contact=Contact('', "", "");
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
   late TextEditingController phoneController;
@@ -21,17 +25,31 @@ class _AddContactPageState extends State<AddContactPage> {
 
 
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("id : ${widget.id}");
+    getArticle();
     firstNameController=TextEditingController();
     lastNameController=TextEditingController();
     phoneController=TextEditingController();
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    firstNameController.dispose();
+    lastNameController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Modification du contact "),),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 12),
         child: Column(
@@ -62,7 +80,9 @@ class _AddContactPageState extends State<AddContactPage> {
       child: Column(
         children: [
           TextFormField(
+
             controller: firstNameController,
+
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
                 icon: Icon(Icons.person),
@@ -71,6 +91,7 @@ class _AddContactPageState extends State<AddContactPage> {
 
           ),
           TextFormField(
+
             controller: lastNameController,
             keyboardType: TextInputType.text,
 
@@ -80,6 +101,7 @@ class _AddContactPageState extends State<AddContactPage> {
             ),
           ),
           TextFormField(
+
             controller: phoneController,
             keyboardType: TextInputType.text,
 
@@ -110,4 +132,18 @@ class _AddContactPageState extends State<AddContactPage> {
     Fluttertoast.showToast(msg: "Enregistrement réussi");
     }
   }
+
+
+  getArticle() async{
+    DatabaseClient().getContact(widget.id).then((value){
+
+      setState(() {
+        contact=Contact("firstname", "lastname", "phone");
+      });
+
+
+    });
+  }
+
+
 }

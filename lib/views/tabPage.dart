@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/items.dart';
 import '../pages/database/DbPage.dart';
+import '../pages/database/add_contact_page.dart';
 import '../pages/file/filePage.dart';
 import '../pages/sharedPref/homepage.dart';
 
@@ -28,7 +29,8 @@ class TabPage extends StatelessWidget {
         children: [
           HomePage(title: 'Shared Preferenced',),
           FilePage(title: 'File ',),
-          DBPage(title: "DataBase")
+          //DBPage(title: "DataBase")
+          AddContactPage()
         ],
 
       ),
